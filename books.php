@@ -2,9 +2,11 @@
 <?php 
     //<!--СТАНДАРТНЫЙ НАБОР ПРИ СТАРТЕ-->
     include_once("mainstart.php"); 
-    include_once("connectbook.php");  
-    $comment = $_POST['comment'];
-    $search  = $_POST['search'];
+    include_once("connectbook.php");
+    // ПРОВЕРКА БЕЗОПАСНОСТИ  
+    $comment = mysql_fix_string ($_POST['comment']);
+    $search  = mysql_fix_string ($_POST['search']);
+
 
    // МЕТКА ПО КОТОРОЙ ВЫВОДИМ КНИГИ
    if (isset($_GET['id']))
@@ -36,7 +38,11 @@
 
 
 
-
+  function mysql_fix_string ($string)
+  {
+      if (get_magic_quotes_gpc()) $string = stripslashes ($string);
+      return mysql_real_escape_string ($string);
+  }
 
 
   
@@ -180,6 +186,7 @@
 
 
 	
+
 
 
 
